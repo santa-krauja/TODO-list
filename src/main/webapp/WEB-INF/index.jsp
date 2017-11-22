@@ -13,33 +13,10 @@
   <body>
 
       <button type="button" id="getList" class="btn btn-primary">List 2</button>
-
-          <br />
-          <br />
-          <br />
-
-          <div id="getResultDiv" style="padding:20px 10px 20px 50px">
-              <ul class="list-group">
-              </ul>
-          </div>
-
-          <br />
-          <br />
-          <br />
-
-
-      <c:forEach var="todo" items="${todos}">
-        <div class="row" style="border:1px solid green;padding:10px">
-          <div class="col-md-4 text-center">${todo.id}</div>
-          <div class="col-md-4 text-center" >${todo.todo}</div>
-        </div>
-      </c:forEach>
-
-    <script>
-      function  getToDoList() {
-          window.location.href = "/list";
-      }
-    </script>
+      <div id="getResultDiv" style="padding:20px 10px 20px 50px">
+          <ul class="list-group">
+          </ul>
+      </div>
 
   </body>
 </html>

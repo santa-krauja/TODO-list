@@ -14,8 +14,10 @@ group 'web.manager.app'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'war'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
@@ -25,10 +27,15 @@ repositories {
 }
 
 dependencies {
-    compile('org.springframework.boot:spring-boot-starter-web','org.apache.tomcat.embed:tomcat-embed-jasper'
-            ,'javax.servlet:jstl')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+    compile('javax.servlet:jstl')
 
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.10'
+    testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
+}
 
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0'
 }
