@@ -26,9 +26,13 @@ public class ToDoService {
 
 
     public ToDo updateToDo(int todoId, ToDo todo) {
-        ToDo update = toDoRepository.findOne(todoId);
-        update.settask(todo.gettask());
-        update.setProgress(todo.getProgress());
-        return toDoRepository.save(update);
+        ToDo tmpToDo = toDoRepository.findOne(todoId);
+        tmpToDo.settask(todo.gettask());
+        tmpToDo.setProgress(todo.getProgress());
+        return toDoRepository.save(tmpToDo);
+    }
+
+    public void deleteAllToDos() {
+        toDoRepository.deleteAll();
     }
 }
