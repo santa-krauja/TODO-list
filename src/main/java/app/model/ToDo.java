@@ -1,14 +1,22 @@
 package app.model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = "TODO_LIST", schema = "public")
 public class ToDo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String todo;
 
-    public ToDo(int id, String todo) {
-        this.id = id;
-        this.todo = todo;
+    private String task;
+
+    private String progress;
+
+    public ToDo(String task) {
+        this.task = task;
+        this.progress = "In progress";
     }
 
     public ToDo() {
@@ -23,11 +31,19 @@ public class ToDo {
         this.id = id;
     }
 
-    public String getTodo() {
-        return todo;
+    public String gettask() {
+        return task;
     }
 
-    public void setTodo(String todo) {
-        this.todo = todo;
+    public void settask(String task) {
+        this.task = task;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
+    public void setProgress(String progress) {
+        this.progress = progress;
     }
 }

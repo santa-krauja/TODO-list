@@ -12,12 +12,9 @@ import java.util.Map;
 
 public class ViewController {
 
-
     @RequestMapping("/")
     public String index() {
         return "index";
     }
-
-
 
 }

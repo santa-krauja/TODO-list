@@ -1,34 +1,34 @@
 package app.service;
 
 import app.model.ToDo;
+import app.repository.ToDoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ToDoService {
 
-    private List<ToDo> toDoList;
+    @Autowired
+    ToDoRepository toDoRepository;
 
-
-
-    {
-        toDoList = new ArrayList<>();
-        toDoList.add(new ToDo(1, "Ask for help"));
-        toDoList.add(new ToDo(2, "Watch 9gag"));
-        toDoList.add(new ToDo(2, "Watch 9gag"));
-        toDoList.add(new ToDo(2, "Watch 9gag"));
-        toDoList.add(new ToDo(2, "Watch 9gag"));
+    public ToDo addToDo(ToDo todo) {
+        toDoRepository.save(todo);
+        return todo;
     }
 
-    public List<ToDo> getToDoList() {
-        return toDoList;
+    public void deleteToDo(int id) {
+        toDoRepository.delete(id);
     }
 
-    public void setToDoList(List<ToDo> toDoList) {
-        this.toDoList = toDoList;
+    public Iterable<ToDo> getAllTodos() {
+        return toDoRepository.findAll();
     }
 
 
+    public ToDo updateToDo(int todoId, ToDo todo) {
+        ToDo update = toDoRepository.findOne(todoId);
+        update.settask(todo.gettask());
+        update.setProgress(todo.getProgress());
+        return toDoRepository.save(update);
+    }
 }

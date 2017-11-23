@@ -1,5 +1,4 @@
 $( document ).ready(function() {
-
     // GET REQUEST
     $("#getList").click(function(event){
         event.preventDefault();
@@ -14,12 +13,13 @@ $( document ).ready(function() {
             success: function(result){
                 //TODO need some improvements for error handling
                 if(result){
-                    $('#getResultDiv ul').empty();
+                    $('.list-group').empty();
                     var List = "";
                     $.each(result, function(i, todo){
-                        $('#getResultDiv ul').append(
-                            $(document.createElement('li')).text(todo.todo)
-                        );
+                        $('.list-group').append(
+                            $(document.createElement('li')).text(todo.task)
+                    );
+
                     });
                     console.log("Success: ", result);
                 }else{
