@@ -1,0 +1,27 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "Exercise",
+  "main": "main.js",
+  "scripts": {
+    "test": "karma"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/burgeriitis/TODO-list.git"
+  },
+  "author": "Burgeriitis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/burgeriitis/TODO-list/issues"
+  },
+  "homepage": "https://github.com/burgeriitis/TODO-list#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "grunt-cli": "^1.2.0",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}

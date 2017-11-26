@@ -20,9 +20,10 @@ class ToDoServiceTest extends Specification {
     def "AddToDo"() {
         setup:
        ToDo todo = new ToDo()
-        todo.settask("Do nothing")
+        todo.setTask("Do nothing")
         todo.setId(0)
         todo.setProgress("None")
+        todo.setAssignee("Roberts")
 
         when:
         toDoService.addToDo(todo)
@@ -36,9 +37,10 @@ class ToDoServiceTest extends Specification {
 
     def "GetAllTodos"() {
         ToDo todo = new ToDo()
-        todo.settask("Do nothing")
+        todo.setTask("Do nothing")
         todo.setId(0)
         todo.setProgress("None")
+        todo.setAssignee("Roberts")
 
         def mockToDos =[]
         mockToDos << todo

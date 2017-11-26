@@ -13,10 +13,11 @@ public class ToDo {
     private String task;
 
     private String progress;
+    private String assignee;
 
     public ToDo(String task) {
         this.task = task;
-        this.progress = "In progress";
+        this.progress = "Not started";
     }
 
     public ToDo() {
@@ -31,12 +32,20 @@ public class ToDo {
         this.id = id;
     }
 
-    public String gettask() {
+    public String getTask() {
         return task;
     }
 
-    public void settask(String task) {
+    public void setTask(String task) {
         this.task = task;
+    }
+
+    public String getAssignee() {
+        return assignee;
+    }
+
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
     public String getProgress() {

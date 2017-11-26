@@ -13,11 +13,13 @@ $( document ).ready(function() {
             success: function(result){
                 //TODO need some improvements for error handling
                 if(result){
-                    $('.list-group').empty();
+                    $('#todo-table-body').empty();
                     var List = "";
                     $.each(result, function(i, todo){
-                        $('.list-group').append(
-                            $(document.createElement('li')).text(todo.task)
+                        $('#todo-table-body').append(
+                            row.compose({
+                                todo
+                            })
                     );
 
                     });

@@ -24,11 +24,11 @@ public class ToDoService {
         return toDoRepository.findAll();
     }
 
-
     public ToDo updateToDo(int todoId, ToDo todo) {
         ToDo tmpToDo = toDoRepository.findOne(todoId);
-        tmpToDo.settask(todo.gettask());
+        tmpToDo.setTask(todo.getTask());
         tmpToDo.setProgress(todo.getProgress());
+        tmpToDo.setAssignee(todo.getAssignee());
         return toDoRepository.save(tmpToDo);
     }
 
