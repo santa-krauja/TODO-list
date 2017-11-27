@@ -12,12 +12,14 @@ public class ToDo {
 
     private String task;
 
-    private String progress;
+    @Enumerated(EnumType.STRING)
+    private TaskProgress progress;
+
     private String assignee;
 
     public ToDo(String task) {
         this.task = task;
-        this.progress = "Not started";
+        this.progress = TaskProgress.NOT_STARTED;
     }
 
     public ToDo() {
@@ -49,10 +51,10 @@ public class ToDo {
     }
 
     public String getProgress() {
-        return progress;
+        return progress.toString();
     }
 
     public void setProgress(String progress) {
-        this.progress = progress;
+        this.progress = TaskProgress.valueOf(progress) ;
     }
 }
