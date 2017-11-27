@@ -25,6 +25,9 @@ JSON example:
          "progress": "In progress",
          "assignee": "Santa"}`
 
+
+#####All is saved on embedded H2 database
+
 ##Frontend part
 To install necessery dependencies for frontend, use 
 `npm install`
@@ -32,4 +35,4 @@ To install necessery dependencies for frontend, use
  To add new dependencies `npm install dependency-name --save`
  
  Still poorly made, 
- TODO: crete form for POST and GET requests
+ TODO: create form for POST and GET requests
