@@ -27,16 +27,6 @@ public class ToDoController {
         return toDoService.getAllTodos();
     }
 
-    @GetMapping("/taskProgress")
-    public Map<TaskProgress, String> getProgressValues() {
-        Map<TaskProgress, String> result = new HashMap<>();
-        TaskProgress[] taskProgresses = TaskProgress.values();
-        IntStream.range(0, taskProgresses.length).forEach(
-                i -> result.put(taskProgresses[i], taskProgresses[i].toString()));
-
-        return result;
-    }
-
     @DeleteMapping("/{id}")
     public void deleteToDo(@PathVariable String id) {
         int todoId = Integer.parseInt(id);
@@ -53,6 +43,16 @@ public class ToDoController {
         int todoId = Integer.parseInt(id);
         return toDoService.updateToDo(todoId, todo);
 
+    }
+
+    @GetMapping("/taskProgress")
+    public Map<TaskProgress, String> getProgressValues() {
+        Map<TaskProgress, String> result = new HashMap<>();
+        TaskProgress[] taskProgresses = TaskProgress.values();
+        IntStream.range(0, taskProgresses.length).forEach(
+                i -> result.put(taskProgresses[i], taskProgresses[i].toString()));
+
+        return result;
     }
 
 }

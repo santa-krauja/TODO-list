@@ -16,9 +16,7 @@ import java.util.Map;
 public class ViewController {
 
     @RequestMapping("/")
-    public String index(Model model) {
-        List<TaskProgress> taskProgresses = new ArrayList<>(Arrays.asList(TaskProgress.values()));
-        model.addAttribute("TaskProgress", TaskProgress.values());
+    public String index() {
         return "index";
     }
 

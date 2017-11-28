@@ -4,20 +4,45 @@
 
 $( document ).ready(function() {
 
-    var progressValues = getProgressValues();
-   /*progressValues = $.getJSON( window.location + "list/taskProgress", function (data) {
-       return data;
-   });*/
+    getToDoList();
 
-
-    console.log(progressValues + " progressValues");
-
-    ajaxGet();
-
-    $("#getList").click(function(event){
+    $("input#submit-task").click(function () {
         event.preventDefault();
-        ajaxGet();
+        var taskVal = $("#task").val();
+        var assigneeVal = $("#assignee").val();
+        var jsonString = "{\"id\" : 0," +
+            "\"task\" : \"" + taskVal  + "\"," +
+            "\"progress\" : \"NOT_STARTED\"," +
+            "\"assignee\" :\"" + assigneeVal + "\"}";
+        $.ajax({
+            url: window.location + "list",
+            type: "POST",
+            dataType: "json",
+            data: jsonString,
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            success : function (data) {
+                var newRow =  newTableRow(data.assignee, data.task, data.id);
+                $("#todoTable tbody").append(
+                    newRow
+                );
+                clearForm("task-form");
+            },
+            error: function (e, data) {
+                console.log(data);
+                console.log("ERROR: " + e.toString());
+            }
+
+        })
     });
+
+    function clearForm(formId) {
+        $(':input','#' + formId)
+            .removeAttr('checked')
+            .removeAttr('selected')
+            .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+            .val('');
+    }
 
     function getProgressValues() {
         $.ajax({
@@ -38,21 +63,7 @@ $( document ).ready(function() {
         })
     }
 
-    function populateProgressDropDownList(progress, id) {
-        $("#row-id-" + id + " :nth-child(3)").append(
-            "<form><select id=\"select-id-" + id + "\"></select></form>"
-        );
-        jQuery.each(progress, function(key, val) {
-            $("#select-id-" + id).append("<option value=\"" + key + "\">" + val + "</option>");
-
-            console.log("Are you here?");
-        });
-        return true;
-    }
-
     function newTableRow(assignee, task, id){
-
-
 
         return "<tr><td>" + assignee + "</td><td>" + task +
             "</td><td><select class=\'form-control\'>" +
@@ -60,7 +71,6 @@ $( document ).ready(function() {
             "<option id=\'option-2-for-" + id + "\' value='IN_PROGRESS\'>In progress</option>" +
             "<option id=\'option-3-for-" + id + "\' value=\'DONE\'>Done</option>" +
             "</select></td></tr>";
-
         /*return "<tr id=\"row-id-" + id + "\"><td>" + assignee + "</td><td>" + task + "</td>" +
             "<td></td>"*/
 
@@ -69,7 +79,7 @@ $( document ).ready(function() {
 
 
     // DO GET
-    function ajaxGet(){
+    function getToDoList(){
         $.ajax({
             type : "GET",
             url : window.location + "list",
@@ -80,7 +90,6 @@ $( document ).ready(function() {
                     var List = "";
                     $.each(result, function(i, todo){
                         var newRow =  newTableRow(todo.assignee, todo.task, todo.id);
-                        console.log(todo.progress + " todo.progress, todo.id " + todo.id);
                         $("#todoTable tbody").append(
                            newRow
                     );

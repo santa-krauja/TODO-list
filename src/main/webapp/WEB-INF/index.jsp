@@ -8,7 +8,9 @@
       <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/node_modules/bootstrap/dist/css/bootstrap.min.css" />
   </head>
 
-  <header>To do list</header>
+  <header>
+      <h1>To do list</h1>
+  </header>
 
   <body>
 
@@ -31,20 +33,27 @@
               </tbody>
           </table>
 
-            <br />
-            <br />
-            <br />
-            <br />
-          <label for="taskProgress">Task progress example</label><select class="form-control col-xs-5" id="taskProgress" name="taskProgress">
+          <br />
+          <label for="task-form">Create new task:</label>
+          <form class="form-inline" id="task-form" name="task-form">
+              <div class="form-group">
+                  <label for="assignee">Assignee</label>
+                  <input type="text" id="assignee" name="assignee" />
+              </div>
+              <div class="form-group">
+                  <label for="task">Task:</label>
+                  <input type="text" id="task" name="task"  />
+              </div>
 
-              <c:forEach items="${TaskProgress}" var="value">
-                <option value="${value}">${value.toString()}</option>
-              </c:forEach>
-          </select>
-          
+                <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary" />
+          </form>
+
       
       </div>
 
 
   </body>
+    <footer>
+
+    </footer>
 </html>
