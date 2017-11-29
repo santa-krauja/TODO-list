@@ -13,42 +13,36 @@
   </header>
 
   <body>
-
-
-      <div id="getResultDiv" class="table-responsive ">
-          <table class="table table-hover" id="todoTable">
-              <thead>
-                  <tr>
-                    <th>Assignee</th>
-                    <th>Task</th>
-                    <th>Progress</th>
-                  </tr>
-                </thead>
-              <tbody>
-              </tbody>
-          </table>
-
+      <div id="getResultDiv">
+          <div class="table-responsive">
+              <table class="table table-hover" id="todoTable">
+                  <thead>
+                      <tr>
+                        <th>Assignee</th>
+                        <th>Task</th>
+                        <th>Progress</th>
+                      </tr>
+                    </thead>
+                  <tbody>
+                  </tbody>
+              </table>
+          </div>
           <br />
-          <label for="task-form">Create new task:</label>
-          <form class="form-inline" id="task-form" name="task-form">
-              <div class="form-group">
-                  <label for="assignee">Assignee</label>
-                  <input type="text" id="assignee" name="assignee" />
-              </div>
-              <div class="form-group">
-                  <label for="task">Task:</label>
-                  <input type="text" id="task" name="task"  />
-              </div>
-
-                <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary" />
-          </form>
-
-      
+          <div>
+              <label for="task-form">Create new task:</label>
+              <form class="form-inline" id="task-form" name="task-form">
+                  <div class="form-group">
+                      <label for="assignee">Assignee</label>
+                      <input type="text" id="assignee" name="assignee" />
+                  </div>
+                  <div class="form-group">
+                      <label for="task">Task:</label>
+                      <input type="text" id="task" name="task"  />
+                  </div>
+                    <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary" />
+              </form>
+          </div>
       </div>
-
-
   </body>
-    <footer>
 
-    </footer>
 </html>

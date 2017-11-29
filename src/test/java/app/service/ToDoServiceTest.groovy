@@ -2,7 +2,6 @@ package app.service
 
 import app.model.ToDo
 import app.repository.ToDoRepository
-import org.springframework.beans.factory.annotation.Autowired
 import spock.lang.Specification
 
 class ToDoServiceTest extends Specification {
@@ -48,7 +47,7 @@ class ToDoServiceTest extends Specification {
 
 
         when:
-        def toDoList = toDoService.getAllTodos()
+        def toDoList = toDoService.getAllToDos()
 
         then:
         toDoList.size() == 1

@@ -2,28 +2,33 @@ package app.model;
 
 import javax.persistence.*;
 
+import java.util.Objects;
+
+import static app.model.TaskProgress.*;
+import static javax.persistence.EnumType.*;
+import static javax.persistence.GenerationType.*;
+
 @Entity
 @Table(name = "TODO_LIST", schema = "public")
 public class ToDo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = AUTO)
     private int id;
 
     private String task;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private TaskProgress progress;
 
     private String assignee;
 
     public ToDo(String task) {
         this.task = task;
-        this.progress = TaskProgress.NOT_STARTED;
+        this.progress = NOT_STARTED;
     }
 
     public ToDo() {
-
     }
 
     public int getId() {
@@ -51,7 +56,7 @@ public class ToDo {
     }
 
     public String getProgress() {
-        return progress.toString();
+        return progress.getName();
     }
 
     public String getProgressEnumConstant() {
@@ -60,5 +65,30 @@ public class ToDo {
 
     public void setProgress(String progress) {
         this.progress = TaskProgress.valueOf(progress) ;
+    }
+
+    @Override
+    public String toString() {
+        return "ToDo{" +
+                "id=" + id +
+                ", task='" + task + '\'' +
+                ", progress=" + progress +
+                ", assignee='" + assignee + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToDo toDo = (ToDo) o;
+        return getId() == toDo.getId() &&
+                Objects.equals(getTask(), toDo.getTask());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), getTask());
     }
 }

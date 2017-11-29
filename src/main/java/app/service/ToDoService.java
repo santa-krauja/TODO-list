@@ -20,7 +20,7 @@ public class ToDoService {
         toDoRepository.delete(id);
     }
 
-    public Iterable<ToDo> getAllTodos() {
+    public Iterable<ToDo> getAllToDos() {
         return toDoRepository.findAll();
     }
 

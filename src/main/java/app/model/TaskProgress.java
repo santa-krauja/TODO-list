@@ -5,8 +5,12 @@ public enum TaskProgress {
 
     private String nameAsString;
 
-    private TaskProgress(String nameAsString) {
+    TaskProgress(String nameAsString) {
         this.nameAsString = nameAsString;
+    }
+
+    public String getName() {
+        return this.nameAsString;
     }
 
     @Override

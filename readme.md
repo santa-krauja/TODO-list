@@ -30,7 +30,7 @@ JSON example:
 #####All is saved on embedded H2 database
 
 ##Frontend part
-To install necessery dependencies for frontend in terminal go to \src\main\webapp and use 
+To install necessery dependencies for frontend in terminal go to src\main\webapp and use 
 `npm install`
 
  To add new dependencies `npm install dependency-name --save`
