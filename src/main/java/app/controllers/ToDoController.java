@@ -39,9 +39,9 @@ public class ToDoController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ToDo updateToDos(@PathVariable String id, @RequestBody ToDo todo){
+    public ToDo updateProgress(@PathVariable String id, @RequestBody ToDo todo){
         int todoId = Integer.parseInt(id);
-        return toDoService.updateToDo(todoId, todo);
+        return toDoService.updateTaskProgress(todoId, todo);
 
     }
 

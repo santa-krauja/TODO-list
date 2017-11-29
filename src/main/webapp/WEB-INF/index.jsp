@@ -14,12 +14,7 @@
 
   <body>
 
-     <%-- <button type="button" diplay="none" id="getList" class="btn btn-primary">List</button>--%>
-      <div id="getResultDiv1" style="padding:20px 10px 20px 50px">
-          <ul class="list-group">
-          </ul>
-      </div>
-      
+
       <div id="getResultDiv" class="table-responsive ">
           <table class="table table-hover" id="todoTable">
               <thead>

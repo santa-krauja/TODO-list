@@ -54,6 +54,10 @@ public class ToDo {
         return progress.toString();
     }
 
+    public String getProgressEnumConstant() {
+        return progress.name();
+    }
+
     public void setProgress(String progress) {
         this.progress = TaskProgress.valueOf(progress) ;
     }

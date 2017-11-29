@@ -32,6 +32,12 @@ public class ToDoService {
         return toDoRepository.save(tmpToDo);
     }
 
+    public ToDo updateTaskProgress(int todoId, ToDo progress) {
+        ToDo tmpToDo = toDoRepository.findOne(todoId);
+        tmpToDo.setProgress(progress.getProgressEnumConstant());
+        return toDoRepository.save(tmpToDo);
+    }
+
     public void deleteAllToDos() {
         toDoRepository.deleteAll();
     }
