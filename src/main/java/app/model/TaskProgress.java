@@ -13,8 +13,4 @@ public enum TaskProgress {
         return this.nameAsString;
     }
 
-    @Override
-    public String toString() {
-        return this.nameAsString;
-    }
 }

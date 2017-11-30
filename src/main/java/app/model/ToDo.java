@@ -1,6 +1,10 @@
 package app.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -16,11 +20,16 @@ public class ToDo {
     @GeneratedValue(strategy = AUTO)
     private int id;
 
+    @Size(min = 3, max = 500)
+    @NotBlank
     private String task;
 
     @Enumerated(STRING)
+    @NotNull
     private TaskProgress progress;
 
+    @Size(min = 3, max = 250)
+    @NotBlank
     private String assignee;
 
     public ToDo(String task) {
@@ -64,7 +73,7 @@ public class ToDo {
     }
 
     public void setProgress(String progress) {
-        this.progress = TaskProgress.valueOf(progress) ;
+        this.progress = TaskProgress.valueOf(progress);
     }
 
     @Override
@@ -88,7 +97,7 @@ public class ToDo {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(getId(), getTask());
     }
+
 }

@@ -2,10 +2,23 @@ $( document ).ready(function() {
 
     getToDoList();
 
-    $('#submit-task').click(function () {
-        event.preventDefault();
+    $('#submit-task').click(addNewToDo);
+
+    $('#task-form').on('keydown', (function(e){
+        if (e.keyCode == 13 || e.which == 13) {
+            addNewToDo();
+            return false;
+        }
+    }));
+
+    function addNewToDo() {
+       // event.preventDefault();
         var taskVal = $('#task').val();
         var assigneeVal = $('#assignee').val();
+        if((assigneeVal == '' || taskVal == '') || (assigneeVal == '' && taskVal == '')) {
+            toDoPostError("Please fill form!");
+            return;
+        }
         var postJson = jsonString(0, taskVal, 'NOT_STARTED', assigneeVal);
         $.ajax({
             url: window.location + 'list',
@@ -18,13 +31,16 @@ $( document ).ready(function() {
                 var newRow =  newTableRow(data.assignee, data.task, data.id);
                 $('#todoTable tbody').append(newRow);
                 clearForm('task-form');
+                $('#task-form').children('span').fadeOut('slow', function () {
+                    $(this).remove();
+                });
             },
             error: function (e, data) {
                 console.log(data);
                 console.log('ERROR: ' + e.toString());
             }
         })
-    });
+    }
 
     function getToDoList(){
         $.ajax({
@@ -38,18 +54,7 @@ $( document ).ready(function() {
                         var newRow =  newTableRow(todo.assignee, todo.task, todo.id);
                         $('#todoTable tbody').append(newRow);
                         //TODO refactor switch to for loop without constants
-                        switch (todo.progress) {
-                            case 'Not started':
-                                $('#option-1-for-' + todo.id ).attr('selected', 'selected');
-                                break;
-                            case 'In progress':
-                                $('#option-2-for-' + todo.id ).attr('selected', 'selected');
-                                break;
-                            case 'Done':
-                                $('#option-3-for-' + todo.id).attr('selected', 'selected');
-                                break;
-                            default:
-                        }
+                        setToDoProgress(todo);
                     });
                     console.log('Success: ', result);
                 }else{
@@ -65,7 +70,7 @@ $( document ).ready(function() {
     }
 
     //Maybe there is better solution for this? Previously nothing worked, because all those dropdowns are dynamically created
-    $(document).on('change', '.select-progress', function(){
+    $('#todoTable').on('change', '.select-progress', function(){
         event.preventDefault();
         var id = $(this).attr('id');
         var idVal =  $('#' + id).val();
@@ -83,6 +88,25 @@ $( document ).ready(function() {
             error : function (data, e) {
                 console.log(data);
                 console.log(putJson);
+                console.log(e);
+            }
+        })
+    });
+
+    $('#todoTable').on('click', '.delete-task', function(){
+        event.preventDefault();
+        var idString = $(this).attr('id');
+        var id = grabAfterDash(idString);
+        var removableTr = $(this).closest('tr');
+       $.ajax({
+            url: window.location + 'list/' + id,
+            type: 'DELETE',
+            success : function (data) {
+                removableTr.fadeOut('slow', function () {
+                    removableTr.remove();
+                });
+            },
+            error : function (e) {
                 console.log(e);
             }
         })
@@ -108,32 +132,57 @@ $( document ).ready(function() {
         })
     }
 
-    function clearForm(formId) {
-        $(':input','#' + formId)
-            .removeAttr('checked')
-            .removeAttr('selected')
-            .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
-            .val('');
-    }
 
-    function newTableRow(assignee, task, id){
-        return '<tr><td>' + assignee + '</td><td>' + task +
-            '</td><td>' +
-                '<form class=\'\' id=\'progress-form\'>' +
-                '<select class=\'select-progress form-control\' id=\'' + id + '\'>' +
-                    '<option id=\'option-1-for-' + id + '\' value=\'NOT_STARTED\'>Not started</option>' +
-                    '<option id=\'option-2-for-' + id + '\' value=\'IN_PROGRESS\'>In progress</option>' +
-                    '<option id=\'option-3-for-' + id + '\' value=\'DONE\'>Done</option>' +
-                '</select>' +
-                '</form>' +
-            '</td></tr>';
-    }
+});
 
-    function jsonString(id, taskVal, progress, assigneeVal) {
-        return '{\"id\" : ' + id + ',' +
+function clearForm(formId) {
+    $(':input','#' + formId)
+        .removeAttr('checked')
+        .removeAttr('selected')
+        .not(':button, :submit, :reset, :hidden, :radio, :checkbox')
+        .val('');
+}
+
+function newTableRow(assignee, task, id){
+    return '<tr class="to-do-info"><td>' + assignee + '</td><td>' + task +
+        '</td><td>' +
+        '<form class=\'\' id=\'progress-form\'>' +
+        '<select class=\'select-progress form-control\' id=\'' + id + '\'>' +
+        '<option id=\'option-1-for-' + id + '\' value=\'NOT_STARTED\'>Not started</option>' +
+        '<option id=\'option-2-for-' + id + '\' value=\'IN_PROGRESS\'>In progress</option>' +
+        '<option id=\'option-3-for-' + id + '\' value=\'DONE\'>Done</option>' +
+        '</select>' +
+        '</form>' +
+        '</td><td><button class="btn btn-danger delete-task" id="delete-' + id + '">Delete task</button></td>' +
+        '</tr>';
+}
+
+function jsonString(id, taskVal, progress, assigneeVal) {
+    return '{\"id\" : ' + id + ',' +
         '\"task\" : \"' + taskVal  + '\",' +
         '\"progress\" : \"' + progress  + '\",' +
         '\"assignee\" :\"' + assigneeVal + '\"}'
-    }
+}
 
-});
+function grabAfterDash(text) {
+    return text.substr(text.lastIndexOf('-') + 1);
+}
+
+function toDoPostError(message) {
+    $('#submit-task').after($('<span />').addClass("post-error label label-warning").html(message));
+}
+
+function setToDoProgress(todo) {
+    switch (todo.progress) {
+        case 'Not started':
+            $('#option-1-for-' + todo.id).attr('selected', 'selected');
+            break;
+        case 'In progress':
+            $('#option-2-for-' + todo.id).attr('selected', 'selected');
+            break;
+        case 'Done':
+            $('#option-3-for-' + todo.id).attr('selected', 'selected');
+            break;
+        default:
+    }
+}

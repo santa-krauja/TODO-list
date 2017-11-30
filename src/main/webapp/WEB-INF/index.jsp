@@ -3,9 +3,13 @@
 <html lang="en">
   <head>
     <title>To do list</title>
-      <script type="text/javascript" src="${pageContext.request.contextPath}/node_modules/jquery/dist/jquery.min.js"></script>
+      <%--<script type="text/javascript" src="${pageContext.request.contextPath}/node_modules/jquery/dist/jquery.min.js"></script>
       <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/toDoListController.js"></script>
-      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+      <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/node_modules/bootstrap/dist/css/bootstrap.min.css" />--%>
+
+      <script type="text/javascript" src="/resources/node_modules/jquery/dist/jquery.min.js"></script>
+      <script type="text/javascript" src="/resources/js/toDoListController.js"></script>
+      <link rel="stylesheet" type="text/css" href="/resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
   </head>
 
   <header>
@@ -18,9 +22,10 @@
               <table class="table table-hover" id="todoTable">
                   <thead>
                       <tr>
-                        <th>Assignee</th>
-                        <th>Task</th>
-                        <th>Progress</th>
+                          <th>Assignee</th>
+                          <th>Task</th>
+                          <th>Progress</th>
+                          <th></th>
                       </tr>
                     </thead>
                   <tbody>
@@ -39,7 +44,7 @@
                       <label for="task">Task:</label>
                       <input type="text" id="task" name="task"  />
                   </div>
-                    <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary" />
+                    <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary" onsubmit="addNewToDo()"/>
               </form>
           </div>
       </div>
