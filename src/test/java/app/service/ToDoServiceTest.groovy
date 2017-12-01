@@ -7,7 +7,7 @@ import spock.lang.Specification
 class ToDoServiceTest extends Specification {
 
 
-   ToDoService toDoService = new ToDoService()
+   ToDoService toDoService = new ToDoService(toDoRepository)
 
     def toDoRepository = Mock(ToDoRepository)
 

@@ -1,50 +1,93 @@
 package app.controllers
 
-import groovyx.net.http.ContentType
-import groovyx.net.http.RESTClient
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
+import app.model.ToDo
+import app.repository.ToDoRepository
+import app.service.ToDoService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.web.WebAppConfiguration
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
+import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.web.context.WebApplicationContext
-import spock.lang.Shared
 import spock.lang.Specification
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import javax.annotation.Resource
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("classpath:application-test.properties")
+class ListRestControllerTest extends Specification {
 
-    @WebAppConfiguration
-    public class RestControllerTest {
+    @Autowired
+    TestRestTemplate testRestTemplate
+    def headers = new HttpHeaders()
 
-        @Autowired
-        private WebApplicationContext context;
+    @Resource
+    ToDoRepository repository
 
-        private MockMvc mockMvc;
+    def service = Mock(ToDoService)
+    def controller = new ToDoController(service)
+    def mockMvc = MockMvcBuilders.standaloneSetup(controller).build()
 
-        @Before
-        public void setup() {
-            mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+    def todo = new ToDo()
+    def todo2 = new ToDo()
+
+    def setup() {
+        todo.setId(1)
+        todo.setTask("Go home")
+        todo.setProgress("IN_PROGRESS")
+        todo.setAssignee("Santa")
+
+        todo2.setId(2)
+        todo2.setTask("Work")
+        todo2.setProgress("IN_PROGRESS")
+        todo2.setAssignee("Santa")
+
+        repository.save(todo)
+        repository.save(todo2)
+    }
+
+    def cleanup() {
+        repository.deleteAll()
+    }
+
+    def "GET /list must return JSON string with all ToDos"() {
+        given:
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers)
+        def expected = "[" + todo.toJsonString() + "," + todo2.toJsonString() + "]"
+
+        when:
+        def response = testRestTemplate.exchange(URI.create("/list"), HttpMethod.GET, entity, String.class)
+
+        then:
+        with(response) {
+            statusCodeValue == 200
+            body == expected
         }
 
-
-       /* @Test
-        public void getUserList() throws Exception {
-            mockMvc.perform(MockMvcRequestBuilders.get("/user"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().contentType("application/json;charset=UTF-8"))
-                    .andExpect(content().encoding("UTF-8"))
-                    .andExpect(jsonPath("[0].id").exists())
-                    .andExpect(jsonPath("[0].task").exists())
-                    .andExpect(jsonPath("[0].name").exists())
-            )
-        }*/
     }
+
+    def "DELETE /list/{id} must delete ToDo with specified Id"() {
+        given:
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers)
+
+        when:
+        def response = testRestTemplate.exchange(URI.create("/list/" + todo2.getId()), HttpMethod.DELETE, entity, String.class)
+
+
+        then:
+
+        with(response) {
+            statusCodeValue == 200
+        }
+        repository.findAll().size() == 1
+        repository.findOne(todo2.getId()) == null
+
+
+
+    }
+
+
+}

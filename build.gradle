@@ -32,6 +32,7 @@ dependencies {
     compile'javax.servlet:jstl'
 
     compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
     compile "org.springframework.boot:spring-boot-devtools:$springBootVersion"
     runtime "com.h2database:h2"
 
@@ -42,6 +43,9 @@ dependencies {
     testCompile'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.codehaus.groovy:groovy-all:2.4.10'
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.1-groovy-2.4'
+    testCompile 'cglib:cglib-nodep:2.2'
+    testCompile 'org.objenesis:objenesis:1.2'
 
     compile group: 'com.jayway.jsonpath', name: 'json-path', version: '2.0.0'
     testCompile group: 'com.jayway.jsonpath', name: 'json-path-assert', version: '2.4.0'
@@ -49,6 +53,9 @@ dependencies {
 
 
     compile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
+
+    testRuntime "com.h2database:h2"
+    testCompile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
 
 
 
