@@ -3,14 +3,14 @@ package app.model;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.util.Objects;
 
-import static app.model.TaskProgress.*;
-import static javax.persistence.EnumType.*;
-import static javax.persistence.GenerationType.*;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 @Table(name = "TODO_LIST", schema = "public")
@@ -18,24 +18,22 @@ public class ToDo {
 
     @Id
     @GeneratedValue(strategy = AUTO)
+    @NotNull
+    @Min(1)
+    @Digits(fraction = 0, integer = 10)
     private int id;
 
-    @Size(min = 3, max = 500)
-    @NotBlank
+    @Size(max = 500, message = "Task can not be too long")
+    @NotBlank(message = "Task needs to be assigned!")
     private String task;
 
     @Enumerated(STRING)
-    @NotNull
+    @NotNull(message = "Progress needs to be assigned")
     private TaskProgress progress;
 
-    @Size(min = 3, max = 250)
-    @NotBlank
+    @Size(max = 250, message = "Assignees names can not be too long")
+    @NotBlank(message = "Someone needs to be assigned")
     private String assignee;
-
-    public ToDo(String task) {
-        this.task = task;
-        this.progress = NOT_STARTED;
-    }
 
     public ToDo() {
     }
@@ -78,7 +76,7 @@ public class ToDo {
 
     @Override
     public String toString() {
-        return "ToDo{" +
+        return "{" +
                 "id=" + id +
                 ", task='" + task + '\'' +
                 ", progress=" + progress +
