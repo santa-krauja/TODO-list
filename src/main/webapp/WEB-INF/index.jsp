@@ -33,7 +33,7 @@
               </table>
           </div>
           <br />
-          <div>
+          <div style="position: fixed; bottom: 0;  width: 100%;">
               <label for="task-form">Create new task:</label>
               <form class="form-inline" id="task-form" name="task-form">
                   <div class="form-group">

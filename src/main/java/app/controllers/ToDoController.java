@@ -6,6 +6,7 @@ import app.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,9 +32,15 @@ public class ToDoController {
         return toDoService.getAllToDos();
     }
 
+    @GetMapping("/{id}")
+    public ToDo getOneToDo(@PathVariable String id) {
+        final int todoId = parseInt(id);
+        return toDoService.getOneToDo(todoId);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteToDo(@PathVariable String id) {
-        int todoId = parseInt(id);
+        final int todoId = parseInt(id);
         toDoService.deleteToDo(todoId);
     }
 
@@ -50,11 +57,11 @@ public class ToDoController {
 
     @GetMapping("/taskProgress")
     public Map<TaskProgress, String> getProgressValues() {
-        Map<TaskProgress, String> result = new HashMap<>();
+        EnumMap<TaskProgress, String> result = new EnumMap<>(TaskProgress.class);
         for (final TaskProgress taskProgress : TaskProgress.values()) {
-            result.put(taskProgress, taskProgress.toString());
+            result.put(taskProgress, taskProgress.getName());
         }
-        return  unmodifiableMap(new HashMap<TaskProgress, String>(result));
+        return  unmodifiableMap(new EnumMap<>(result));
     }
 
 }

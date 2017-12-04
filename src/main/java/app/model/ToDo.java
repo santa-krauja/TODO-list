@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
@@ -17,9 +19,9 @@ public class ToDo {
 
     @Id
     @GeneratedValue(strategy = AUTO)
-    /*@NotNull
+    @NotNull
     @Min(1)
-    @Digits(fraction = 0, integer = 10)*/
+    @Digits(fraction = 0, integer = 10)
     private int id;
 
     @Size(max = 500, message = "Task can not be too long")
@@ -78,6 +80,13 @@ public class ToDo {
         return "{\"id\":" + id + "," +
                 "\"task\":\"" + task + "\"," +
                 "\"progress\":\"" + progress.getName() + "\"," +
+                "\"assignee\":\"" + assignee + "\"}";
+    }
+
+    public String toJsonEnumString() {
+        return "{\"id\":" + id + "," +
+                "\"task\":\"" + task + "\"," +
+                "\"progress\":\"" + progress + "\"," +
                 "\"assignee\":\"" + assignee + "\"}";
     }
 

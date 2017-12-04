@@ -43,6 +43,10 @@ public class ToDoService {
         return toDoRepository.save(tmpToDo);
     }
 
+    public ToDo getOneToDo(int id) {
+        return toDoRepository.findOne(id);
+    }
+
     public void deleteAllToDos() {
         toDoRepository.deleteAll();
     }

@@ -6,22 +6,20 @@ import spock.lang.Specification
 
 class ToDoServiceTest extends Specification {
 
-
+    def toDoRepository = Mock(ToDoRepository)
    ToDoService toDoService = new ToDoService(toDoRepository)
 
-    def toDoRepository = Mock(ToDoRepository)
 
-    def setup() {
-        toDoService.toDoRepository = toDoRepository
+    def cleanup() {
         toDoService.deleteAllToDos()
     }
 
-    def "AddToDo"() {
+    def "Add ToDo"() {
         setup:
        ToDo todo = new ToDo()
         todo.setTask("Do nothing")
-        todo.setId(0)
-        todo.setProgress("None")
+        todo.setId(1)
+        todo.setProgress("DONE")
         todo.setAssignee("Roberts")
 
         when:
@@ -34,11 +32,11 @@ class ToDoServiceTest extends Specification {
     def "DeleteToDo"() {
     }
 
-    def "GetAllTodos"() {
+    def "Get All Todos"() {
         ToDo todo = new ToDo()
         todo.setTask("Do nothing")
-        todo.setId(0)
-        todo.setProgress("None")
+        todo.setId(1)
+        todo.setProgress("DONE")
         todo.setAssignee("Roberts")
 
         def mockToDos =[]
