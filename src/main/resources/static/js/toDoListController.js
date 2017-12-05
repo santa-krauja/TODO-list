@@ -67,7 +67,6 @@ $(document).ready(function () {
                     $.each(result, function (i, todo) {
                         let newRow = newTableRow(todo.assignee, todo.task, todo.id);
                         $('#todoTable tbody').append(newRow);
-                        //TODO refactor switch to for loop without constants
                         setToDoProgress(todo);
                     });
                     console.log('Success: ', result);
@@ -177,10 +176,6 @@ $(document).ready(function () {
             '\"task\" : \"' + taskVal + '\",' +
             '\"progress\" : \"' + progress + '\",' +
             '\"assignee\" :\"' + assigneeVal + '\"}'
-    }
-
-    function grabAfterDash(text) {
-        return text.substr(text.lastIndexOf('-') + 1);
     }
 
     function toDoPostError(message) {

@@ -34,6 +34,3 @@ To install necessery dependencies for frontend in terminal go to src\main\resour
 `npm install`
 
  To add new dependencies `npm install dependency-name --save`
- 
- Still poorly made, 
- TODO: create form for DELETE requests

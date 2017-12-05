@@ -1,0 +1,15 @@
+#footer-form {
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+#getResultDiv {
+    padding: 10px;
+}
