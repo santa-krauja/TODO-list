@@ -6,22 +6,23 @@ import spock.lang.Specification
 
 class ToDoServiceTest extends Specification {
 
-    def toDoRepository = Mock(ToDoRepository)
-   ToDoService toDoService = new ToDoService(toDoRepository)
+    final toDoRepository = Mock(ToDoRepository)
+    final toDoService = new ToDoService(toDoRepository)
 
+    def todo = new ToDo()
 
-    def cleanup() {
-        toDoService.deleteAllToDos()
-    }
-
-    def "Add ToDo"() {
-        setup:
-       ToDo todo = new ToDo()
+    def setup() {
         todo.setTask("Do nothing")
         todo.setId(1)
         todo.setProgress("DONE")
         todo.setAssignee("Roberts")
+    }
 
+    def cleanup() {
+
+    }
+
+    def "Add ToDo"() {
         when:
         toDoService.addToDo(todo)
 
@@ -30,19 +31,18 @@ class ToDoServiceTest extends Specification {
     }
 
     def "DeleteToDo"() {
+        when:
+        toDoService.deleteToDo(todo.getId())
+
+        then:
+        1* toDoRepository.delete(todo.getId())
     }
 
     def "Get All Todos"() {
-        ToDo todo = new ToDo()
-        todo.setTask("Do nothing")
-        todo.setId(1)
-        todo.setProgress("DONE")
-        todo.setAssignee("Roberts")
-
-        def mockToDos =[]
+        given:
+        def mockToDos = []
         mockToDos << todo
         toDoRepository.findAll() >> mockToDos
-
 
         when:
         def toDoList = toDoService.getAllToDos()
@@ -52,6 +52,16 @@ class ToDoServiceTest extends Specification {
         toDoList.first() == todo
     }
 
-    def "UpdateToDo"() {
+    def "Update ToDo progress"() {
+        given:
+        toDoRepository.findOne(1) >> todo
+        def oldProgress = todo.getProgress()
+        todo.setProgress("WONT_DO")
+        toDoRepository.save(todo) >> todo
+
+        when:
+        def updatedToDO = toDoService.updateTaskProgress(1, todo)
+        then:
+        updatedToDO.getProgress() != oldProgress
     }
 }

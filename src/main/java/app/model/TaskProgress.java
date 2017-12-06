@@ -1,7 +1,7 @@
 package app.model;
 
 public enum TaskProgress {
-    DONE("Done"), IN_PROGRESS("In progress"), NOT_STARTED("Not started"), WONT_DO("Won't do");
+    NOT_STARTED("Not started"), IN_PROGRESS("In progress"), DONE("Done"),  WONT_DO("Won't do");
 
     private String nameAsString;
 

@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
@@ -74,23 +73,24 @@ class ListRestControllerTest extends Specification {
 
     def "GET /list with ToDo id must return JSON string with needed ToDo JSON"() {
         given:
+        todo.setId(3)
         final expected = todo.toJsonString()
         final id = todo.getId()
         final HttpEntity<String> entity = new HttpEntity<String>(null, headers)
 
         when:
-        final response = testRestTemplate.exchange(URI.create(link + id), GET, entity, String.class)
+        final response = testRestTemplate.exchange(URI.create("/list/" + id), GET, entity, String.class)
 
         then:
         with(response) {
             statusCodeValue == 200
             body == expected
         }
-
     }
 
     def "DELETE /list/{id} must delete ToDo with specified Id"() {
         given:
+        todo2.setId(6)
         final id = todo2.getId()
         final HttpEntity<String> entity = new HttpEntity<String>(null, headers)
 
@@ -102,14 +102,12 @@ class ListRestControllerTest extends Specification {
         }
         repository.findAll().size() == 1
         repository.findOne(todo2.getId()) == null
-
-
     }
 
     def "Create new task thru HTTP POST /list request"() {
         given:
         def todo3 = new ToDo()
-        todo3.setId(3)
+        todo3.setId(9)
         todo3.setTask("Go home")
         todo3.setProgress("IN_PROGRESS")
         todo3.setAssignee("Viktors")
@@ -131,13 +129,14 @@ class ListRestControllerTest extends Specification {
 
     def "Update task progress providing id in uri parameters"() {
         given:
+        todo.setId(10)
         final oldToDoJson = todo.toJsonString()
         todo.setProgress("DONE")
         headers.setContentType(MediaType.APPLICATION_JSON)
         final HttpEntity<String> entity = new HttpEntity<String>(todo.toJsonEnumString(), headers)
 
         when:
-        def response = testRestTemplate.exchange(URI.create(link + 1), PUT, entity, String.class)
+        def response = testRestTemplate.exchange(URI.create(link + todo.getId()), PUT, entity, String.class)
 
         then:
         with(response) {
@@ -146,13 +145,12 @@ class ListRestControllerTest extends Specification {
         }
         repository.findAll().size() == 2
         repository.findOne(todo.getId()).toJsonString() != oldToDoJson
-
     }
 
-    def "/taskProgress endpoint return all task enum- value pairs"(){
+    def "/taskProgress endpoint return all task enum- value pairs"() {
         given:
         final HttpEntity<String> entity = new HttpEntity<String>(null, headers)
-        final enumJson = "{\"DONE\":\"Done\",\"IN_PROGRESS\":\"In progress\",\"NOT_STARTED\":\"Not started\"}"
+        final enumJson = "{\"NOT_STARTED\":\"Not started\",\"IN_PROGRESS\":\"In progress\",\"DONE\":\"Done\",\"WONT_DO\":\"Won't do\"}"
 
         when:
         def response = testRestTemplate.exchange(URI.create(link + "taskProgress"), GET, entity, String.class)
@@ -163,6 +161,4 @@ class ListRestControllerTest extends Specification {
             body == enumJson
         }
     }
-
-
 }

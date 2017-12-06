@@ -45,6 +45,7 @@ $(document).ready(function () {
                 });
                 let newRow = newTableRow(newToDo.assignee, newToDo.task, newToDo.id);
                 $('#todoTable tbody').append(newRow);
+                setToDoProgress(newToDo);
                 clearForm('task-form');
                 $('#task-form').children('span').fadeOut('slow', function () {
                     $(this).remove();
@@ -69,7 +70,6 @@ $(document).ready(function () {
                         $('#todoTable tbody').append(newRow);
                         setToDoProgress(todo);
                     });
-                    console.log('Success: ', result);
                 } else {
                     $('#getResultDiv').html('<strong>Error, no list</strong>');
                     console.log('Fail: ', result);
@@ -86,7 +86,6 @@ $(document).ready(function () {
     $('#todoTable').on('change', '.select-progress', function () {
         event.preventDefault();
         let id = $(this).closest('tr').attr('id');
-        console.log(id);
         let idVal = $(this).val();
         let putJson = jsonString(id, '', idVal, '');
         $.ajax({
@@ -97,7 +96,6 @@ $(document).ready(function () {
             contentType: 'application/json',
             mimeType: 'application/json',
             success: function (data) {
-                console.log(data);
             },
             error: function (data, e) {
                 console.log(data);
@@ -189,8 +187,6 @@ $(document).ready(function () {
                 $('#option-' + i + '-' + todo.id).attr('selected', 'selected');
             }
             i++;
-            console.log(todo.progress + ' : todo progress');
-            console.log(progressValues[key] + ': javascript progress')
         });
     }
 });

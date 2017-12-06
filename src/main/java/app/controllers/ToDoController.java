@@ -6,6 +6,7 @@ import app.service.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +34,13 @@ public class ToDoController {
     }
 
     @GetMapping("/{id}")
-    public ToDo getOneToDo(@PathVariable String id) {
+    public ToDo getOneToDo(@Valid @PathVariable String id) {
         final int todoId = parseInt(id);
         return toDoService.getOneToDo(todoId);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteToDo(@PathVariable String id) {
+    public void deleteToDo(@Valid @PathVariable String id) {
         final int todoId = parseInt(id);
         toDoService.deleteToDo(todoId);
     }
@@ -50,7 +51,7 @@ public class ToDoController {
     }
 
     @PutMapping(value = "/{id}", consumes = APPLICATION_JSON_VALUE)
-    public ToDo updateProgress(@PathVariable String id, @RequestBody ToDo todo){
+    public ToDo updateProgress(@ Valid @PathVariable String id,@Valid @RequestBody ToDo todo){
         int todoId = parseInt(id);
         return toDoService.updateTaskProgress(todoId, todo);
     }
