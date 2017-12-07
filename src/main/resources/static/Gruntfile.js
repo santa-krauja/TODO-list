@@ -14,11 +14,18 @@ module.exports = function (grunt) {
                     'js/tmp/toDoListController-compiled.js': 'js/toDoListController.js'
                 }
             }
+        },
+        jshint: {
+            all: ['Gruntfile.js', 'js/**/*.js']
+        },
+        watch: {
+            files: [ 'js/**/*.js'],
+            tasks: ['jshint']
         }
     });
 
     grunt.loadTasks('tasks');
-
-    grunt.registerTask('default', ['babel', 'clean']);
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.registerTask('default', ['babel', 'clean', 'jshint', 'watch']);
 
 };

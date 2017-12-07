@@ -1,23 +1,12 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html lang="en">
-<head>
-    <title>To do list</title>
-    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/node_modules/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/toDoListController.js"></script>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/node_modules/bootstrap/dist/css/bootstrap.min.css" />--%>
-
-    <script type="text/javascript" src="/resources/node_modules/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/resources/js/toDoListController.js"></script>
-    <link rel="stylesheet" type="text/css" href="/resources/css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="/resources/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-</head>
-
-<header>
-    <h1 class="center">To do list</h1>
-</header>
+<%@include file="includes/header.jsp"%>
 
 <body>
+<script type="text/javascript" src="/resources/js/tmp/toDoListController-compiled.js"></script>
+
+<p>
+    You are now connected to your Facebook account.
+    Click <a href="/">here</a> to see some entries from your Facebook feed.
+</p>
 <div id="getResultDiv">
     <div class="table-responsive">
         <table class="table table-hover" id="todoTable">
@@ -34,6 +23,13 @@
         </table>
     </div>
     <br/>
+
+    <div class="facebook-freinds">
+
+    </div>
+
+
+
     <div id="footer-form" class="center">
         <label for="task-form">Create new task:</label>
         <form class="form-inline" id="task-form" name="task-form">
@@ -47,6 +43,7 @@
             </div>
             <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary"
                    onsubmit="addNewToDo()"/>
+            <span id="post-error" class="post-error label label-warning">Please fill form!</span>
         </form>
     </div>
 </div>

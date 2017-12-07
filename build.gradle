@@ -4,6 +4,7 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -21,13 +22,24 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 
 repositories {
     mavenCentral()
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+jar {
+    baseName = 'ToDo-list-with-facebook'
+    version =  '0.1.0'
 }
 
 dependencies {
     compile'org.springframework.boot:spring-boot-starter-web'
+    compile group: 'org.springframework.social', name: 'spring-social-facebook', version: '3.0.0.M1'
+    compile group: 'org.springframework.social', name: 'spring-social-core', version: '2.0.0.M4'
+    compile group: 'org.springframework.social', name: 'spring-social-config', version: '2.0.0.M4'
     compile'org.apache.tomcat.embed:tomcat-embed-jasper'
     compile'javax.servlet:jstl'
 
@@ -53,7 +65,7 @@ task wrapper(type: Wrapper) {
 test{
     //include 'src/test'
     useJUnit {
-        includeCategories 'app.controllers.ToDoControllerTest'
+        includeCategories 'web.manager.app.controllers.ToDoControllerTest'
     }
     testLogging {
         showStandardStreams = true

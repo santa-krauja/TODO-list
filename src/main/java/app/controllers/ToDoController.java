@@ -16,7 +16,7 @@ import static java.util.Collections.unmodifiableMap;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/list")
+@RequestMapping("todo/list")
 public class ToDoController {
 
 //TODO- validation

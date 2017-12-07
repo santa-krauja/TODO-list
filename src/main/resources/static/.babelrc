@@ -1,5 +1,5 @@
 {
-  "presets": ["env"],
+  "presets": ["env", "minify"],
   "env": {
     "production": {
       "presets": ["minify"]

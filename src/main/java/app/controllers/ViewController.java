@@ -6,9 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ViewController {
 
-    @RequestMapping("/")
+    @RequestMapping("/todo")
     public String index() {
         return "index";
+    }
+
+    @RequestMapping("/")
+    public String checkingFacebookConnection() {
+        return "redirect:/fc";
     }
 
 }

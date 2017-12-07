@@ -13,3 +13,7 @@
 #getResultDiv {
     padding: 10px;
 }
+
+#post-error {
+    display: none
+}
