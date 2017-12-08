@@ -47,6 +47,8 @@ dependencies {
 
     compile 'org.codehaus.groovy:groovy-all:2.4.10'
 
+    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
+
     testCompile'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.1-groovy-2.4'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
@@ -60,16 +62,18 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.0'
 }
 
-test{
-    //include 'src/test'
-    useJUnit {
-        includeCategories 'app.controllers.ListRestControllerTest'
-    }
-    testLogging {
-        showStandardStreams = true
-    }
 
+
+task stage() {
+    dependsOn clean, war
+}
+war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
 }
 
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
+stage.dependsOn(copyToLib)

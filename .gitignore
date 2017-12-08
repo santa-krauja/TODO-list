@@ -68,3 +68,5 @@ npm-debug.log
 !/gradlew.bat
 !/gradlew
 !/gradle/
+!/src/main/resources/static/node_modules/
+
