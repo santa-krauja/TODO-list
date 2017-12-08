@@ -24,7 +24,7 @@ class ListRestControllerTest extends Specification {
     @Autowired
     TestRestTemplate testRestTemplate
     final headers = new HttpHeaders()
-    final link = "/list/"
+    final link = "/todo/list/"
 
     @Resource
     ToDoRepository repository
@@ -79,7 +79,7 @@ class ListRestControllerTest extends Specification {
         final HttpEntity<String> entity = new HttpEntity<String>(null, headers)
 
         when:
-        final response = testRestTemplate.exchange(URI.create("/list/" + id), GET, entity, String.class)
+        final response = testRestTemplate.exchange(URI.create(link + id), GET, entity, String.class)
 
         then:
         with(response) {

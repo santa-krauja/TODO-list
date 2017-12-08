@@ -11,7 +11,7 @@ buildscript {
     }
 }
 
-group 'web.manager.app'
+group 'app'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
@@ -31,15 +31,12 @@ repositories {
 }
 
 jar {
-    baseName = 'ToDo-list-with-facebook'
+    baseName = 'ToDo-list'
     version =  '0.1.0'
 }
 
 dependencies {
     compile'org.springframework.boot:spring-boot-starter-web'
-    compile group: 'org.springframework.social', name: 'spring-social-facebook', version: '3.0.0.M1'
-    compile group: 'org.springframework.social', name: 'spring-social-core', version: '2.0.0.M4'
-    compile group: 'org.springframework.social', name: 'spring-social-config', version: '2.0.0.M4'
     compile'org.apache.tomcat.embed:tomcat-embed-jasper'
     compile'javax.servlet:jstl'
 
@@ -48,8 +45,9 @@ dependencies {
     compile "org.springframework.boot:spring-boot-devtools:$springBootVersion"
     runtime "com.h2database:h2"
 
+    compile 'org.codehaus.groovy:groovy-all:2.4.10'
+
     testCompile'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'org.codehaus.groovy:groovy-all:2.4.10'
     testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.1-groovy-2.4'
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4'
     testCompile 'cglib:cglib-nodep:2.2'
@@ -65,10 +63,13 @@ task wrapper(type: Wrapper) {
 test{
     //include 'src/test'
     useJUnit {
-        includeCategories 'web.manager.app.controllers.ToDoControllerTest'
+        includeCategories 'app.controllers.ListRestControllerTest'
     }
     testLogging {
         showStandardStreams = true
     }
 
 }
+
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean

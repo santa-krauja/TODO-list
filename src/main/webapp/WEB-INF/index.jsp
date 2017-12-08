@@ -3,10 +3,6 @@
 <body>
 <script type="text/javascript" src="/resources/js/tmp/toDoListController-compiled.js"></script>
 
-<p>
-    You are now connected to your Facebook account.
-    Click <a href="/">here</a> to see some entries from your Facebook feed.
-</p>
 <div id="getResultDiv">
     <div class="table-responsive">
         <table class="table table-hover" id="todoTable">
@@ -31,18 +27,17 @@
 
 
     <div id="footer-form" class="center">
-        <label for="task-form">Create new task:</label>
+        <label for="task-form" style="color:green">Create new task:</label>
         <form class="form-inline" id="task-form" name="task-form">
             <div class="form-group">
-                <label for="assignee">Assignee</label>
+                <label for="assignee">Assignee</label><br>
                 <input type="text" id="assignee" name="assignee"/>
             </div>
             <div class="form-group">
-                <label for="task">Task:</label>
+                <label for="task">Task:</label><br>
                 <input type="text" id="task" name="task"/>
+                <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary"/>
             </div>
-            <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary"
-                   onsubmit="addNewToDo()"/>
             <span id="post-error" class="post-error label label-warning">Please fill form!</span>
         </form>
     </div>

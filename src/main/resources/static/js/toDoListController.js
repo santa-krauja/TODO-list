@@ -24,7 +24,10 @@ $(document).ready(function () {
 
     getToDoList();
 
-    $('#submit-task').click(addNewToDo());
+    $('#submit-task').click(function() {
+        event.preventDefault();
+        addNewToDo();
+    });
 
     $('#task-form').on('keydown', (function (e) {
         if (e.keyCode == 13 || e.which == 13) {
@@ -44,11 +47,10 @@ $(document).ready(function () {
 });
 
 function addNewToDo() {
-    // event.preventDefault();
     const taskVal = $('#task').val();
     const assigneeVal = $('#assignee').val();
     if ((assigneeVal == '' || taskVal == '') || (assigneeVal == '' && taskVal == '')) {
-        $('#post-error').css('display', 'none');
+        $('#post-error').css('display', 'block');
         return;
     }
     const postJson = jsonString(1, taskVal, 'NOT_STARTED', assigneeVal);
@@ -60,7 +62,6 @@ function addNewToDo() {
         contentType: 'application/json',
         mimeType: 'application/json',
         success: function () {
-
             let newToDo = null;
             $.ajax({
                 type: 'GET',
@@ -80,6 +81,7 @@ function addNewToDo() {
             setToDoProgress(newToDo);
             clearForm('task-form');
             hideElement("post-error");
+            $('#post-error').css('display', 'none');
             /*$('#task-form').children('span').fadeOut('slow', function () {
                 $(this).remove();
             });*/

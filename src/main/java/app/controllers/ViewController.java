@@ -10,10 +10,4 @@ public class ViewController {
     public String index() {
         return "index";
     }
-
-    @RequestMapping("/")
-    public String checkingFacebookConnection() {
-        return "redirect:/fc";
-    }
-
 }
