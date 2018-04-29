@@ -12,14 +12,14 @@ import org.springframework.context.annotation.Profile;
 public class Application {
 
     public static void main(String args[]) {
-        SpringApplication.run(LocalConfig.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
-    @Configuration
+   /* @Configuration
     @Profile("local")
     @ComponentScan(lazyInit = true)
     static class LocalConfig {
-    }
+    }*/
 }
 
 

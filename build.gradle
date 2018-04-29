@@ -1,14 +1,21 @@
 buildscript {
     ext {
         springBootVersion = '1.5.8.RELEASE'
+        herokuPluginVersion = '1.0.1'
     }
     repositories {
         mavenCentral()
         maven { url "https://repo.spring.io/milestone" }
+        maven { url "https://plugins.gradle.org/m2/"}
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "gradle.plugin.com.heroku.sdk:heroku-gradle:${herokuPluginVersion}"
     }
+}
+
+plugins {
+    id "com.heroku.sdk.heroku-gradle" version "1.0.1"
 }
 
 group 'app'
@@ -20,7 +27,7 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-
+apply plugin: 'com.heroku.sdk.heroku-gradle'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -34,6 +41,7 @@ jar {
     baseName = 'ToDo-list'
     version =  '0.1.0'
 }
+
 
 dependencies {
     compile'org.springframework.boot:spring-boot-starter-web'
@@ -62,12 +70,15 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.0'
 }
 
-
-
 task stage() {
     dependsOn clean, war
 }
 war.mustRunAfter clean
+
+heroku {
+    appName = "ToDo list"
+    includes = ["README.md"]
+}
 
 task copyToLib(type: Copy) {
     into "$buildDir/server"
