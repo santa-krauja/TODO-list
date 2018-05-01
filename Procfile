@@ -1,1 +1,1 @@
-web: java -jar build/server/webapp-runner-8.5.11.3.jar build/libs/*.war
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/server/webapp-runner-*.jar build/libs/ToDo-list-0.1.0.war

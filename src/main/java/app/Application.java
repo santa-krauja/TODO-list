@@ -15,11 +15,11 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-   /* @Configuration
+
     @Profile("local")
     @ComponentScan(lazyInit = true)
     static class LocalConfig {
-    }*/
+    }
 }
 
 

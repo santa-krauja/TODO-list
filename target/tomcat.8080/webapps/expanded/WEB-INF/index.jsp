@@ -34,7 +34,7 @@
                 <input type="text" id="assignee" name="assignee"/>
             </div>
             <div class="form-group">
-                <label for="task">Task:</label><br>
+                <label for="task">Task</label><br>
                 <input type="text" id="task" name="task"/>
                 <input type="button" id="submit-task" name="Submit" value="Submit" class="btn btn-primary"/>
             </div>

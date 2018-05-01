@@ -38,4 +38,4 @@ To install necessary dependencies for frontend in terminal go to src\main\resour
  ##Heroku
  https://stark-hollows-72801.herokuapp.com/
  
- ./gradlew build deployHeroku
+ gradle.bat build deployHeroku

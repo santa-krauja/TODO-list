@@ -31,13 +31,7 @@ apply plugin: 'com.heroku.sdk.heroku-gradle'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
-repositories {
-    mavenCentral()
-    maven { url "https://repo.spring.io/milestone" }
-}
-
-jar {
+war {
     baseName = 'ToDo-list'
     version =  '0.1.0'
 }
