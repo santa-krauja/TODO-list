@@ -5,6 +5,8 @@ import app.repository.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ToDoService {
 
@@ -22,7 +24,7 @@ public class ToDoService {
     }
 
     public void deleteToDo(int id) {
-        toDoRepository.delete(id);
+        toDoRepository.deleteById(id);
     }
 
     public Iterable<ToDo> getAllToDos() {
@@ -30,7 +32,7 @@ public class ToDoService {
     }
 
     public ToDo updateToDo(int todoId, ToDo todo) {
-        ToDo tmpToDo = toDoRepository.findOne(todoId);
+        ToDo tmpToDo = toDoRepository.findById(todoId).orElse(addToDo(new ToDo()));
         tmpToDo.setTask(todo.getTask());
         tmpToDo.setProgress(todo.getProgress());
         tmpToDo.setAssignee(todo.getAssignee());
@@ -38,13 +40,13 @@ public class ToDoService {
     }
 
     public ToDo updateTaskProgress(int todoId, ToDo progress) {
-        ToDo tmpToDo = toDoRepository.findOne(todoId);
+        ToDo tmpToDo = toDoRepository.findById(todoId).orElseThrow(NullPointerException::new);
         tmpToDo.setProgress(progress.getProgressEnumConstant());
         return toDoRepository.save(tmpToDo);
     }
 
     public ToDo getOneToDo(int id) {
-        return toDoRepository.findOne(id);
+        return toDoRepository.findById(id).orElseThrow(NullPointerException::new);
     }
 
     public void deleteAllToDos() {

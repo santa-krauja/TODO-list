@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Objects;
 
+import static app.model.TaskProgress.*;
+import static java.util.Objects.*;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.AUTO;
 
@@ -25,7 +27,7 @@ public class ToDo {
     private int id;
 
     @Size(max = 500, message = "Task can not be too long")
-    @NotBlank(message = "Task needs to be assigned!")
+    @NotNull(message = "Task needs to be assigned!")
     private String task;
 
     @Enumerated(STRING)
@@ -33,7 +35,7 @@ public class ToDo {
     private TaskProgress progress;
 
     @Size(max = 250, message = "Assignees names can not be too long")
-    @NotBlank(message = "Someone needs to be assigned")
+    @NotNull(message = "Someone needs to be assigned")
     private String assignee;
 
     public ToDo() {
@@ -73,7 +75,7 @@ public class ToDo {
     }
 
     public void setProgress(String progress) {
-        this.progress = TaskProgress.valueOf(progress);
+        this.progress = valueOf(progress);
     }
 
     public String toJsonString() {
@@ -103,13 +105,13 @@ public class ToDo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ToDo toDo = (ToDo) o;
-        return getId() == toDo.getId() &&
+        return (getId() == toDo.getId()) &&
                 Objects.equals(getTask(), toDo.getTask());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTask());
+        return hash(getId(), getTask());
     }
 
 }
