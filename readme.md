@@ -34,8 +34,3 @@ To install necessary dependencies for frontend in terminal go to src\main\resour
 `npm install`
 
  To add new dependencies `npm install dependency-name --save`
- 
- ##Heroku
- https://stark-hollows-72801.herokuapp.com/
- 
- gradle.bat build deployHeroku
