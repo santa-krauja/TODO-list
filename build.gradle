@@ -1,6 +1,7 @@
 buildscript {
     ext {
         springBootVersion = '2.0.1.RELEASE'
+        dockerVersion = '0.13.0';
     }
     repositories {
         mavenCentral()
@@ -9,6 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${dockerVersion}")
     }
 }
 
@@ -20,6 +22,9 @@ repositories {
 group 'app'
 version '1.0-SNAPSHOT'
 
+group = 'springio'
+
+apply plugin: 'com.palantir.docker'
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'war'
@@ -30,7 +35,7 @@ apply plugin: 'io.spring.dependency-management'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-war {
+bootJar {
     baseName = 'ToDo-list'
     version =  '0.1.0'
 }
@@ -60,4 +65,11 @@ dependencies {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.5.1'
+}
+
+docker {
+    dependsOn build
+    name "${project.group}/${bootJar.baseName}"
+    files bootJar.archivePath
+    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
 }
