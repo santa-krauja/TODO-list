@@ -1,11 +1,12 @@
 package app.service;
 
-import app.model.ToDo;
-import app.repository.ToDoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import app.model.ToDo;
+import app.repository.ToDoRepository;
 
 @Service
 public class ToDoService {
@@ -40,16 +41,13 @@ public class ToDoService {
     }
 
     public ToDo updateTaskProgress(int todoId, ToDo progress) {
-        ToDo tmpToDo = toDoRepository.findById(todoId).orElseThrow(NullPointerException::new);
+        Optional<ToDo> optionalToDo = toDoRepository.findById(todoId);
+        ToDo tmpToDo = optionalToDo.orElseGet(() -> optionalToDo.orElseThrow(ItemNotFoundException::new));
         tmpToDo.setProgress(progress.getProgressEnumConstant());
         return toDoRepository.save(tmpToDo);
     }
 
     public ToDo getOneToDo(int id) {
         return toDoRepository.findById(id).orElseThrow(NullPointerException::new);
-    }
-
-    public void deleteAllToDos() {
-        toDoRepository.deleteAll();
     }
 }

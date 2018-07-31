@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.1.RELEASE'
+        springBootVersion = '2.0.3.RELEASE'
         dockerVersion = '0.13.0';
     }
     repositories {
@@ -36,7 +36,12 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 bootJar {
-    baseName = 'ToDo-list'
+    baseName = 'todo-list'
+    version =  '0.1.0'
+}
+
+bootWar {
+    baseName = 'todo-list'
     version =  '0.1.0'
 }
 
@@ -68,8 +73,8 @@ task wrapper(type: Wrapper) {
 }
 
 docker {
-    dependsOn build
-    name "${project.group}/${bootJar.baseName}"
-    files bootJar.archivePath
-    buildArgs(['JAR_FILE': "${bootJar.archiveName}"])
+    dependsOn bootWar
+    name "${project.group}/${bootWar.baseName}"
+    files bootWar.archivePath
+    buildArgs(['WAR_FILE': "${bootWar.archiveName}"])
 }

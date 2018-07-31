@@ -1,19 +1,24 @@
 package app.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Objects;
-
-import static app.model.TaskProgress.*;
-import static java.util.Objects.*;
+import static app.model.TaskProgress.valueOf;
+import static java.util.Objects.hash;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.AUTO;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "TODO_LIST", schema = "public")
@@ -27,7 +32,7 @@ public class ToDo {
     private int id;
 
     @Size(max = 500, message = "Task can not be too long")
-    @NotNull(message = "Task needs to be assigned!")
+    @NotBlank(message = "Task needs to be assigned!")
     private String task;
 
     @Enumerated(STRING)
@@ -35,7 +40,7 @@ public class ToDo {
     private TaskProgress progress;
 
     @Size(max = 250, message = "Assignees names can not be too long")
-    @NotNull(message = "Someone needs to be assigned")
+    @NotBlank(message = "Someone needs to be assigned")
     private String assignee;
 
     public ToDo() {

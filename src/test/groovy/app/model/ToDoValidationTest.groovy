@@ -1,15 +1,16 @@
 package app.model
 
+import static javax.validation.Validation.buildDefaultValidatorFactory
+
 import spock.lang.Specification
 
 import javax.validation.ConstraintViolation
-import javax.validation.Validation
 
 class ToDoValidationTest extends Specification {
 
 
     def todo = new ToDo()
-    final factory = Validation.buildDefaultValidatorFactory()
+    final factory = buildDefaultValidatorFactory()
     final validator = factory.getValidator()
 
     def setup() {
@@ -43,11 +44,11 @@ class ToDoValidationTest extends Specification {
         violations.size() == result
 
         where:
-        result | task
-        0      | "Go home"
-        1      | ""
-        1      | "S".multiply(501)
-        1      | "   "
+        result || task
+        0      || "Go home"
+        1      || ""
+        1      || "S".multiply(504)
+        1      || "   "
     }
 
     def "set assignee should return errors with wrong values"() {
@@ -59,11 +60,11 @@ class ToDoValidationTest extends Specification {
         violations.size() == result
 
         where:
-        result | assignee
-        0      | "Santa"
-        1      | ""
-        1      | "S".multiply(251)
-        1      | "   "
+        result || assignee
+        0      || "Santa"
+        1      || ""
+        1      || "S".multiply(251)
+        1      || "   "
     }
 
 }
